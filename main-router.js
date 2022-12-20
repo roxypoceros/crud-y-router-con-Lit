@@ -2,7 +2,7 @@ import { LitElement, html } from 'lit';
 import { router} from 'lit-element-router';
 import "./main-outlet";
 import "./components/info-users";
-import "./components/show-users";
+import './components/show-users';
 
 export class MainRouter extends router (LitElement) {
 
