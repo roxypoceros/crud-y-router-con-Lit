@@ -3,6 +3,7 @@ import { router} from 'lit-element-router';
 import "./main-outlet";
 import "./components/info-users";
 import './components/show-users';
+import "./components/add-user"
 
 export class MainRouter extends router (LitElement) {
 
@@ -20,8 +21,12 @@ static get properties() {
       pattern: "",
       },
       {
-        name:"info",
-        pattern: "info",
+      name:"info",
+       pattern: "info",
+      },
+      {
+      name:"addUser",
+      pattern: "addUser",
       }]
   }
 
@@ -44,6 +49,8 @@ static get properties() {
     <main-outlet active-route=${this.route}>
       <show-users route="users"></show-users>
       <info-users route="info"></info-users>
+      <add-user route="addUser"></add-user>
+
 
     </main-outlet>
     `;

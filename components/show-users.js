@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { navigator } from "lit-element-router";
+import "./add-user"
 
 export class ShowUsers extends navigator(LitElement) {
   static get properties() {
@@ -32,13 +33,43 @@ export class ShowUsers extends navigator(LitElement) {
       :host {
         display: block;
         padding: 0px;
+        font-family: 'Alexandria', sans-serif;
+        --ligthViolet: #ccccff;
+        --violet: #9999ff;
+        --almostBlack: #2a2a2a;
       }
-      .headerContainer {
+      .titleContainer {
         display: flex;
         min-width: 100vw;
       }
+
+      .title{
+        min-width: 100vw;
+
+      }
       .usersContainer {
         padding: 16px;
+      }
+      button {
+        background-color: var(--ligthViolet);
+        color: var(--almostBlack);
+        border-radius: 25px;
+        border: var(--violet);
+        max-width: 150px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        overflow: hidden;
+        padding: 9px 20px 8px;
+        text-align: center;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: 100%;
+      }
+      button:hover,
+      button:focus {
+        opacity: 0.9;
       }
     `,
   ];
@@ -57,16 +88,17 @@ export class ShowUsers extends navigator(LitElement) {
 
   render() {
     return html`
-      <div class="headerContainer">
+      <div class="titleContainer">
         <h1>Usuarios registrados</h1>
         <br />
+        <br />
 
-        <button>Add user</button>
       </div>
+      <button @click=${() => this.navigateTo("/addUser")}>Add user</button>
+
       ${this.users.map(
         (e) => html`
           <div class="usersContainer">
-            <p>ID:${e.id_usuario}</p>
             <p>Nombre:${e.nombre}</p>
             <p>Apellido paterno:${e.apellidoPaterno}</p>
             <p>Apellido materno:${e.apellidoMaterno}</p>
