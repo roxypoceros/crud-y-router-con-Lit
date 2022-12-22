@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { navigator } from "lit-element-router";
-import "./add-user"
+//import "./add-user"
 
 export class ShowUsers extends navigator(LitElement) {
   static get properties() {
@@ -104,7 +104,7 @@ export class ShowUsers extends navigator(LitElement) {
             <p>Apellido materno:${e.apellidoMaterno}</p>
 
             <button @click=${() => this.navigateTo("/info")}>Update</button>
-            <button @click=${() => this.deleteUser(e)}>Delete</button>
+            <button @click=${() => this.deleteUser(e.id_usuario)}>Delete</button>
             <br />
           </div>
         `
@@ -116,10 +116,28 @@ export class ShowUsers extends navigator(LitElement) {
     this.navigate(path);
   }
 
-  deleteUser(e){
+  deleteUser(id){
     console.log("Botón que borra");
-    const id = this.users.id_usuario
+    const requestOptions = {
 
-}
-}
+      method: "DELETE",
+
+      headers: { "Content-Type": "application/json" },
+
+      body: null,
+
+    };
+      fetch("http://216.238.68.244:8080/litelement/api/borrar/usuario/" + id, requestOptions) 
+      .then((response) => response.json())
+      .then((preview) => {
+        console.log(preview);
+      })
+      .catch((err) => console.log("Solicitud fallida", err));
+      window.location.reload();
+    }
+  }
+
+
+
+
 customElements.define("show-users", ShowUsers);

@@ -42,11 +42,10 @@ export class AddUser extends LitElement {
     };
   }
 
-  constructor(){
+  constructor() {
     super();
     this.newUser = [];
-  } 
-
+  }
 
   /*   sendNewUSer(data) {
       this.dispatchEvent(
@@ -65,18 +64,10 @@ export class AddUser extends LitElement {
         <p>Nombre:</p>
         <input type="text" id="userName" />
         <p>Apellido paterno:</p>
-        <input
-          type="text"
-          id="firstLastname"
-        />
+        <input type="text" id="firstLastname" />
         <p>Apellido materno</p>
-        <input
-          type="text"
-          id="secondLastname"
-        />
+        <input type="text" id="secondLastname" />
         <br />
-
-        <p>Nuevo usuario:</p>
 
         <button @click=${this.addNewUser}>Add user</button>
       </div>
@@ -84,46 +75,38 @@ export class AddUser extends LitElement {
   }
 
 
-  addNewUser(e){
+
+  addNewUser(e) {
     console.log(this.nombreDeUsuario.value);
     console.log(this.firstLastname.value);
     console.log(this.secondLastname.value);
     fetch("http://216.238.68.244:8080/litelement/api/crear/usuario", {
-      method: 'POST', // or 'PUT'
+      method: "POST", // or 'PUT'
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(
-        {
-        "nombre":this.nombreDeUsuario.value,
-        "apellidoPaterno": this.firstLastname.value,
-        "apellidoMaterno":this.secondLastname.value
-      }
-      ),
+      body: JSON.stringify({
+        nombre: this.nombreDeUsuario.value,
+        apellidoPaterno: this.firstLastname.value,
+        apellidoMaterno: this.secondLastname.value,
+      }),
     })
-    .then((response) => response.json())
-    .then((preview) => { 
-      console.log(preview);
-    })
-    .catch((err) => console.log("Solicitud fallida", err));
-
- 
+      .then((response) => response.json())
+      .then((preview) => {
+        console.log(preview);
+      })
+      .catch((err) => console.log("Solicitud fallida", err));
   }
 
-  
-
-  get nombreDeUsuario(){
+  get nombreDeUsuario() {
     return this.renderRoot?.querySelector("#userName" ?? null);
-
   }
-  get firstLastname(){
+  get firstLastname() {
     return this.renderRoot?.querySelector("#firstLastname" ?? null);
   }
-  get secondLastname(){
+  get secondLastname() {
     return this.renderRoot?.querySelector("#secondLastname" ?? null);
   }
-  
-  
 }
 
 customElements.define("add-user", AddUser);
