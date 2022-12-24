@@ -33,7 +33,7 @@ export class ShowUsers extends navigator(LitElement) {
       :host {
         display: block;
         padding: 0px;
-        font-family: 'Alexandria', sans-serif;
+        font-family: "Alexandria", sans-serif;
         --ligthViolet: #ccccff;
         --violet: #9999ff;
         --almostBlack: #2a2a2a;
@@ -43,9 +43,8 @@ export class ShowUsers extends navigator(LitElement) {
         min-width: 100vw;
       }
 
-      .title{
+      .title {
         min-width: 100vw;
-
       }
       .usersContainer {
         padding: 16px;
@@ -77,14 +76,13 @@ export class ShowUsers extends navigator(LitElement) {
   getData() {
     fetch("http://216.238.68.244:8080/litelement/api/usuarios/")
       .then((response) => response.json())
-      .then((respuesta) => {this.users = respuesta;
+      .then((respuesta) => {
+        this.users = respuesta;
       })
       .catch((err) => console.log("Solicitud fallida", err));
 
     console.log(this.users, "info de users");
   }
-
-
 
   render() {
     return html`
@@ -92,7 +90,6 @@ export class ShowUsers extends navigator(LitElement) {
         <h1>Usuarios registrados</h1>
         <br />
         <br />
-
       </div>
       <button @click=${() => this.navigateTo("/addUser")}>Add user</button>
 
@@ -103,7 +100,7 @@ export class ShowUsers extends navigator(LitElement) {
             <p>Apellido paterno:${e.apellidoPaterno}</p>
             <p>Apellido materno:${e.apellidoMaterno}</p>
 
-            <button @click=${() => this.navigateTo("/info")}>Update</button>
+            <button @click=${() => this.sendID(e)}>Update</button>
             <button @click=${() => this.deleteUser(e.id_usuario)}>Delete</button>
             <br />
           </div>
@@ -112,32 +109,41 @@ export class ShowUsers extends navigator(LitElement) {
     `;
   }
 
+  sendID(data) {
+    this.dispatchEvent(
+      new CustomEvent("sendID", {
+        detail: { data },
+        bubbles: true,
+        composed: true,
+      })
+    );
+    this.navigateTo("/info");
+  }
+
   navigateTo(path) {
     this.navigate(path);
   }
 
-  deleteUser(id){
+  deleteUser(id) {
     console.log("Botón que borra");
     const requestOptions = {
-
       method: "DELETE",
 
       headers: { "Content-Type": "application/json" },
 
       body: null,
-
     };
-      fetch("http://216.238.68.244:8080/litelement/api/borrar/usuario/" + id, requestOptions) 
+    fetch(
+      "http://216.238.68.244:8080/litelement/api/borrar/usuario/" + id,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((preview) => {
         console.log(preview);
       })
-      .catch((err) => console.log("Solicitud fallida", err));
-      window.location.reload();
-    }
+      .catch((err) => console.log("Solicitud fallida", err))
+      .then((response) => {this.getData()})
   }
-
-
-
+}
 
 customElements.define("show-users", ShowUsers);

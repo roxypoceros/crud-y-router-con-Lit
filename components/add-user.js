@@ -80,6 +80,7 @@ export class AddUser extends LitElement {
     console.log(this.nombreDeUsuario.value);
     console.log(this.firstLastname.value);
     console.log(this.secondLastname.value);
+    
     fetch("http://216.238.68.244:8080/litelement/api/crear/usuario", {
       method: "POST", // or 'PUT'
       headers: {
